@@ -1,6 +1,7 @@
 import { IMovie } from "./models/Movie";
 import { getData } from "./services/movieService";
 
+
 let movies: IMovie[] = [];
 
 export const init = () => {

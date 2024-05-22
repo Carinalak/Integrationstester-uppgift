@@ -1,5 +1,9 @@
-import { IMovie } from "./models/Movie";
+//import { IMovie } from "./models/Movie";
 
+
+
+/*
+// Flyttad till movieFunctions.ts
 export const movieSort = (movies: IMovie[], desc: boolean = true) => {
   return movies.sort((a: IMovie, b: IMovie) => {
     if (desc) {
@@ -15,3 +19,4 @@ export const movieSort = (movies: IMovie[], desc: boolean = true) => {
     }
   });
 };
+*/
