@@ -4,7 +4,7 @@ import { IMovie } from "../ts/models/Movie";
 import * as movieFunctions from "../ts/movieFunctions";
 
 describe("main tests", () => {
-    let mockedMovieSort: jest.SpyInstance<void>;
+    let mockedMovieSort: jest.SpyInstance<any>;
     //let mockedIMovie: jest.SpyInstance<void>;
     //let mockedDesc: jest.SpyInstance<void>;
 
