@@ -39,5 +39,5 @@ describe("main tests", () => {
         // Assert
         expect(mockedMovieSort).toHaveBeenCalled();
         
-    })
-})
+    });
+});

@@ -1,7 +1,7 @@
 import { IOmdbResponse } from "./../models/IOmdbResponse";
 import { IMovie } from "./../models/Movie";
 import axios from "axios";
-import { movieSort } from "../ts/movieFunctions";
+//import { movieSort } from "../movieFunctions";
 
 export const getData = async (searchText: string): Promise<IMovie[]> => {
   return axios
