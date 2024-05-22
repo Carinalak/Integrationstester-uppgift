@@ -1,3 +1,33 @@
+import { handleSubmit } from "../ts/movieApp";
+import { getData } from "../ts/services/movieService";
+
+describe("main tests", () => {
+
+    beforeEach(() => {
+        document.body.innerHTML = `
+          <input id="searchText" value="hello" />
+          <div id="movie-container"></div>
+        `;
+      });
+
+    test("Handles an input text and checks the container is empty", () => {
+        // Assign Vad som ska göras:
+		// Tar emot en text från inputfältet
+        let searchText = "hello";
+        const container = document.getElementById("movie-container") as HTMLDivElement;
+        
+
+        // Act Funktionen som gör det:
+        handleSubmit(); 
+
+        // Assert
+
+        expect(getData).toHaveBeenCalledWith(searchText, container);
+        expect(container.innerHTML).toBe(""); // Kontrollera att container är tömd
+    })
+})
+
+
 /*
 
 //import { IMovie } from "../ts/models/Movie";
@@ -31,40 +61,4 @@ describe("main tests", () => {
 */
 
 
-
-
-
-
-
-
-import { handleSubmit } from "../ts/movieApp";
-import { getData } from "../ts/services/movieService";
-
-describe("main tests", () => {
-
-    beforeEach(() => {
-        document.body.innerHTML = `
-          <input id="searchText" value="hello" />
-          <div id="movie-container"></div>
-        `;
-      });
-
-    test("Handles an input text and checks the container is empty", () => {
-        // Assign Vad som ska göras:
-		// Tar emot en text från inputfältet
-        let searchText = "hello";
-        const container = document.getElementById("movie-container") as HTMLDivElement;
-        
-
-        // Act Funktionen som gör det:
-        handleSubmit(); 
-        
-
-        // Assert
-
-        
-        expect(getData).toHaveBeenCalledWith(searchText, container);
-        expect(container.innerHTML).toBe(""); // Kontrollera att container är tömd
-    })
-})
 
