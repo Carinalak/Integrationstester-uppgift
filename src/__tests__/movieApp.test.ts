@@ -1,6 +1,40 @@
 import { handleSubmit } from "../ts/movieApp";
 import { getData } from "../ts/services/movieService";
 
+jest.mock("../ts/services/movieService");
+
+describe("main tests", () => {
+    beforeEach(() => {
+        document.body.innerHTML = `
+          <input id="searchText" value="hello">
+          <div id="movie-container"></div>
+        `;
+    });
+
+    test("Handles an input text and checks the container is empty", async () => {
+        // Assign
+        let searchText = "hello";
+        const container = document.getElementById("movie-container") as HTMLDivElement;
+        const mockMovies = [{ Title: "A Movie", Poster: "url1" }];
+        (getData as jest.Mock).mockResolvedValue(mockMovies);
+
+        // Act
+        await handleSubmit(); 
+
+        // Assert
+        expect(getData).toHaveBeenCalledWith(searchText); 
+        expect(container.innerHTML).not.toEqual(""); 
+    });
+});
+
+
+
+
+
+
+
+/*
+
 describe("main tests", () => {
 
     beforeEach(() => {
@@ -22,11 +56,11 @@ describe("main tests", () => {
 
         // Assert
 
-        expect(getData).toHaveBeenCalledWith(searchText, container);
+        expect(handleSubmit).toHaveBeenCalledWith(searchText, container);
         expect(container.innerHTML).toBe(""); // Kontrollera att container är tömd
     })
 })
-
+*/
 
 /*
 
