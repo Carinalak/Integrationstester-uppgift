@@ -1,43 +1,69 @@
-import { movieSort } from "../ts/movieFunctions";
+import { movieSort } from "../ts/functions";
 import { IMovie } from "../ts/models/Movie";
-//import * as functions from "../ts/movieFunctions";
-import * as movieFunctions from "../ts/movieFunctions";
 
-describe("main tests", () => {
-    let mockedMovieSort: jest.SpyInstance<any>;
-    //let mockedIMovie: jest.SpyInstance<void>;
-    //let mockedDesc: jest.SpyInstance<void>;
+describe("movieSort function", () => {
+    test("should sort movies in ascending order when desc is true", () => {
+        // Assign: skapa en osorterad lista med filmer
+        const movies: IMovie[] = [
+            { imdbID: "1", Title: "C Movie", Year: "2011", Type: "movie", Poster: "url1" },
+            { imdbID: "2", Title: "A Movie", Year: "2012", Type: "movie", Poster: "url2" },
+            { imdbID: "3", Title: "B Movie", Year: "2013", Type: "movie", Poster: "url3" }
+        ];
+        const desc = true;
 
-    beforeEach(() => {
-        mockedMovieSort = jest.spyOn(movieFunctions, "movieSort");
-        //mockedIMovie = jest.spyOn(Movie, "IMovie");
-        //mockedDesc = jest.spyOn(movieFunctions, "desc");
-      });
+        // Act: anropa movieSort-funktionen
+        const sortedMovies = movieSort(movies, desc);
 
-      afterEach(() => {
-       // mockedMovieSort.mockReset();
-        mockedMovieSort.mockReset();
-       // mockedDesc.mockReset();
+        // Assert: kontrollera att filmerna är i stigande ordning
+        expect(sortedMovies).toEqual([
+            { imdbID: "2", Title: "A Movie", Year: "2012", Type: "movie", Poster: "url2" },
+            { imdbID: "3", Title: "B Movie", Year: "2013", Type: "movie", Poster: "url3" },
+            { imdbID: "1", Title: "C Movie", Year: "2011", Type: "movie", Poster: "url1" }
+        ]);
     });
 
-    test("Handles a list and a boolean", () => {
-        // Assign Vad som ska göras:
-	
+    test("should sort movies in descending order when desc is false", () => {
+        // Assign: skapa en osorterad lista med filmer
+        const movies: IMovie[] = [
+            { imdbID: "1", Title: "C Movie", Year: "2011", Type: "movie", Poster: "url1" },
+            { imdbID: "2", Title: "A Movie", Year: "2012", Type: "movie", Poster: "url2" },
+            { imdbID: "3", Title: "B Movie", Year: "2013", Type: "movie", Poster: "url3" }
+        ];
+        const desc = false;
+
+        // Act: anropa movieSort-funktionen
+        const sortedMovies = movieSort(movies, desc);
+
+        // Assert: kontrollera att filmerna är i fallande ordning
+        expect(sortedMovies).toEqual([
+            { imdbID: "1", Title: "C Movie", Year: "2011", Type: "movie", Poster: "url1" },
+            { imdbID: "3", Title: "B Movie", Year: "2013", Type: "movie", Poster: "url3" },
+            { imdbID: "2", Title: "A Movie", Year: "2012", Type: "movie", Poster: "url2" }
+        ]);
+    });
+
+    test("should handle an empty list", () => {
+        // Assign: skapa en tom lista
         const movies: IMovie[] = [];
-        const desc: boolean = true;
-        
-        mockedMovieSort.mockImplementation(() => {
-            return { success: true, error: "" };
-        });
-        mockedMovieSort.mockImplementation(() => {
-            return { movies }
-        });
+        const desc = true;
 
-        // Act Funktionen som gör det:
-        movieSort(movies, desc); 
+        // Act: anropa movieSort-funktionen
+        const sortedMovies = movieSort(movies, desc);
 
-        // Assert
-        expect(mockedMovieSort).toHaveBeenCalled();
-        
+        // Assert: kontrollera att den returnerade listan är tom
+        expect(sortedMovies).toEqual([]);
     });
+
+    test("should handle one movie in the list", () => {
+        // Assign: skapa en lista med en film
+        const movies: IMovie[] = [{ imdbID: "1", Title: "A Movie", Year: "2011", Type: "movie", Poster: "url1" }];
+        const desc = true;
+
+        // Act: anropa movieSort-funktionen
+        const sortedMovies = movieSort(movies, desc);
+
+        // Assert: kontrollera att den returnerade listan innehåller samma enda film
+        expect(sortedMovies).toEqual([{ imdbID: "1", Title: "A Movie", Year: "2011", Type: "movie", Poster: "url1" }]);
+    });
+
 });
