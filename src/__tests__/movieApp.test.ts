@@ -1,4 +1,4 @@
-import { handleSubmit } from "../ts/movieApp";
+import { displayNoResult, handleSubmit } from "../ts/movieApp";
 import { getData } from "../ts/services/movieService";
 
 jest.mock("../ts/services/movieService");
@@ -6,11 +6,15 @@ jest.mock("../ts/services/movieService");
 describe("main tests", () => {
     beforeEach(() => {
         document.body.innerHTML = `
-          <input id="searchText" value="hello">
-          <div id="movie-container"></div>
+        <form id="searchForm">
+        <input id="searchText" value="hello">
+        </form>
+        <div id="movie-container"></div>
+          
         `;
     });
 
+    
     test("Handles an input text and checks the container is empty", async () => {
         // Assign
         let searchText = "hello";
@@ -25,74 +29,50 @@ describe("main tests", () => {
         expect(getData).toHaveBeenCalledWith(searchText); 
         expect(container.innerHTML).not.toEqual(""); 
     });
-});
 
-
-
-
-
-
-
-/*
-
-describe("main tests", () => {
-
-    beforeEach(() => {
-        document.body.innerHTML = `
-          <input id="searchText" value="hello" />
-          <div id="movie-container"></div>
-        `;
-      });
-
-    test("Handles an input text and checks the container is empty", () => {
-        // Assign Vad som ska göras:
-		// Tar emot en text från inputfältet
+    
+    test("Handles an input text and displays 'No results' message when no movies found", async () => {
+        // Assign
         let searchText = "hello";
         const container = document.getElementById("movie-container") as HTMLDivElement;
-        
+        (getData as jest.Mock).mockResolvedValue([]);
 
-        // Act Funktionen som gör det:
-        handleSubmit(); 
-
-        // Assert
-
-        expect(handleSubmit).toHaveBeenCalledWith(searchText, container);
-        expect(container.innerHTML).toBe(""); // Kontrollera att container är tömd
-    })
-})
-*/
-
-/*
-
-//import { IMovie } from "../ts/models/Movie";
-import { handleSubmit } from "../ts/movieApp";
-
-describe("main tests", () => {
-    test("Handles an input text and checks the container is empty", () => {
-        // Assign Vad som ska göras:
-		// Behöver en text och en lista
-
-        let searchText: string = "hello";
-        //let movies: IMovie[] = [];
-        //document.body.innerHTML = `<ul id="container"></ul>`;
-        
-
-
-        // Act Funktionen som gör det. Anropa den:
-        handleSubmit();
-      
+        // Act
+        await handleSubmit(); 
 
         // Assert
-        //expect(movies).toHaveLength(1);
-        //expect(movies[0].Title).toBe(searchText);
-        expect(handleSubmit).toHaveBeenCalledWith(searchText);
+        expect(getData).toHaveBeenCalledWith(searchText); 
+        expect(container.innerHTML).toContain("Inga sökresultat att visa"); 
+    });
+    
+    test("Handles an input text and displays 'No results' message when an error occurs", async () => {
+        // Assign
+        let searchText = "hello";
+        const container = document.getElementById("movie-container") as HTMLDivElement;
+        (getData as jest.Mock).mockRejectedValue(new Error("Failed to fetch data"));
 
+        // Act
+        await handleSubmit(); 
+
+        // Assert
+        expect(getData).toHaveBeenCalledWith(searchText); 
+        expect(container.innerHTML).toContain("Inga sökresultat att visa"); 
+    });
+    
+    test("Adds 'No results' message to the container", () => {
+        // Assign
+        const container = document.createElement("div");
+
+        // Act
+        displayNoResult(container);
+
+        // Assert
+        expect(container.innerHTML).toContain("Inga sökresultat att visa");
     });
 
-
+    
 });
 
-*/
 
 
 
