@@ -65,5 +65,4 @@ describe("movieSort function", () => {
         // Assert: kontrollera att den returnerade listan innehåller samma enda film
         expect(sortedMovies).toEqual([{ imdbID: "1", Title: "A Movie", Year: "2011", Type: "movie", Poster: "url1" }]);
     });
-
 });
