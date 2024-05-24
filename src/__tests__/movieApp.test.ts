@@ -13,6 +13,7 @@ describe("main tests", () => {
         <div id="movie-container"></div>
         `;
     });
+
     
     test("init adds event listener to the form and calls handleSubmit on submit", () => {
   
